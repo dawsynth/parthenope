@@ -20,6 +20,17 @@ local plugins = {
         },
         build = ':TSUpdate',
     },
+    {
+        "williamboman/mason.nvim",
+        config = true,
+        build = ":MasonUpdate" -- :MasonUpdate updates registry contents
+    },
+    'williamboman/mason-lspconfig.nvim',
+    'neovim/nvim-lspconfig',
+    'mfussenegger/nvim-lint',
+    'mfussenegger/nvim-dap',
+    'rcarriga/nvim-dap-ui',
+    'folke/neodev.nvim',
     'catppuccin/nvim',
     'theprimeagen/vim-be-good',
 
