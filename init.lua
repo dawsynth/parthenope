@@ -1,3 +1,3 @@
-require("dawsyn.plugins")
-require("dawsyn.set")
 require("dawsyn.remap")
+require("dawsyn.set")
+require("dawsyn.plugins")

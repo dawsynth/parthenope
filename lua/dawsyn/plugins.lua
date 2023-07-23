@@ -1,21 +1,15 @@
--- Set <space> as the leader key
--- See `:help mapleader`
---  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
-
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
 -- Auto-install lazy.nvim --
 if not vim.loop.fs_stat(lazypath) then
-  vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
-    "--branch=stable", -- latest stable release
-    lazypath,
-  })
+    vim.fn.system({
+        "git",
+        "clone",
+        "--filter=blob:none",
+        "https://github.com/folke/lazy.nvim.git",
+        "--branch=stable", -- latest stable release
+        lazypath,
+    })
 end
 vim.opt.rtp:prepend(lazypath)
 
@@ -35,14 +29,14 @@ require('lazy').setup({
         'VonHeikemen/lsp-zero.nvim',
         branch = 'v2.x',
         dependencies = {
-            -- LSP Support
-            {'neovim/nvim-lspconfig'},             -- Required
-            {                                      -- Optional
-                'williamboman/mason.nvim',
-                build = function()
-                pcall(vim.api.nvim_command, 'MasonUpdate')
-                end,
-            },
+                -- LSP Support
+                {'neovim/nvim-lspconfig'},             -- Required
+                {                                      -- Optional
+                    'williamboman/mason.nvim',
+                    build = function()
+                        pcall(vim.api.nvim_command, 'MasonUpdate')
+                    end,
+                },
             {'williamboman/mason-lspconfig.nvim'}, -- Optional
 
             -- Autocompletion
@@ -78,23 +72,3 @@ require('rose-pine').setup({
 
 vim.opt.termguicolors = true
 vim.cmd.colorscheme('rose-pine')
-
-
--- LSP
-local lsp = require('lsp-zero').preset({"recommended"})
-
-lsp.ensure_installed({
-  'clangd',
-  'rust_analyzer',
-  'lua_ls',
-})
-
-lsp.nvim_workspace()
-
-lsp.on_attach(function(client, bufnr)
-  -- see :help lsp-zero-keybindings
-  -- to learn the available actions
-  lsp.default_keymaps({buffer = bufnr})
-end)
-
-lsp.setup()
