@@ -15,8 +15,6 @@ vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
     { 'rose-pine/neovim', name = 'rose-pine' },
-    { 'tpope/vim-fugitive' },
-    { 'tpope/vim-rhubarb' },
     {
         -- Highlight, edit, and navigate code
         'nvim-treesitter/nvim-treesitter',
@@ -29,14 +27,14 @@ require('lazy').setup({
         'VonHeikemen/lsp-zero.nvim',
         branch = 'v2.x',
         dependencies = {
-                -- LSP Support
-                {'neovim/nvim-lspconfig'},             -- Required
-                {                                      -- Optional
-                    'williamboman/mason.nvim',
-                    build = function()
-                        pcall(vim.api.nvim_command, 'MasonUpdate')
-                    end,
-                },
+            -- LSP Support
+            {'neovim/nvim-lspconfig'},             -- Required
+            {                                      -- Optional
+                'williamboman/mason.nvim',
+                build = function()
+                    pcall(vim.api.nvim_command, 'MasonUpdate')
+                end,
+            },
             {'williamboman/mason-lspconfig.nvim'}, -- Optional
 
             -- Autocompletion
@@ -46,7 +44,11 @@ require('lazy').setup({
         }
     },
     -- Fuzzy Finder (files, lsp, etc)
-    { 'nvim-telescope/telescope.nvim', branch = '0.1.x', dependencies = { 'nvim-lua/plenary.nvim' } },
+    {
+      'nvim-telescope/telescope.nvim',
+      branch = '0.1.x',
+      dependencies = { 'nvim-lua/plenary.nvim' }
+    },
 
     -- Fuzzy Finder Algorithm which requires local dependencies to be built.
     -- Only load if `make` is available. Make sure you have the system
@@ -59,6 +61,14 @@ require('lazy').setup({
         cond = function()
             return vim.fn.executable 'make' == 1
         end,
+    },
+    {
+      "NeogitOrg/neogit",
+      dependencies = {
+        "nvim-lua/plenary.nvim",         -- required
+        "sindrets/diffview.nvim",        -- optional - Diff integration
+      },
+      config = true
     },
     { 'folke/which-key.nvim', opts = {} },
     { 'mfussenegger/nvim-lint' },
