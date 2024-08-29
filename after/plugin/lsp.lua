@@ -6,6 +6,7 @@ lsp.ensure_installed({
     'clangd',
     'rust_analyzer',
     'lua_ls',
+    'matlab_ls',
 })
 
 -- Fix Undefined global 'vim'
@@ -52,6 +53,22 @@ lsp.on_attach(function(client, bufnr)
     vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
     vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
 end)
+
+require('mason').setup({})
+require('mason-lspconfig').setup({
+    ensure_installed = {
+        'matlab_ls'
+    },
+    handlers = {
+        lsp.default_setup,
+        matlab_ls = function()
+            require('lspconfig').matlab_ls.setup({
+                filetypes = {"matlab"},
+                single_file_support = true
+            })
+        end,
+    },
+})
 
 lsp.setup()
 
