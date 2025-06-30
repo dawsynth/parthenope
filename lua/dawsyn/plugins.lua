@@ -73,11 +73,14 @@ require('lazy').setup({
     { 'folke/which-key.nvim', opts = {} },
     { 'mfussenegger/nvim-lint' },
     { 'mhartington/formatter.nvim' },
+    { 'dhananjaylatkar/cscope_maps.nvim' },
     { 'theprimeagen/vim-be-good' },
 })
 
 require('rose-pine').setup({
     variant = 'moon',
+    disable_background = true,
+    disable_italics = true,
 })
 
 vim.opt.termguicolors = true

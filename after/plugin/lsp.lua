@@ -7,6 +7,7 @@ lsp.ensure_installed({
     'rust_analyzer',
     'lua_ls',
     'matlab_ls',
+    'vale_ls'
 })
 
 -- Fix Undefined global 'vim'
