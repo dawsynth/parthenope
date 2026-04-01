@@ -1,8 +1,9 @@
 ----------------------------------------Retrieve plugins--------------------------------------------
 vim.pack.add({
   { src = "https://github.com/rose-pine/neovim" },
-  --  { src = "https://github.com/nvim-tree/nvim-web-devicons" },
-  { src = "https://github.com/echasnovski/mini.pick" },
+  { src = "https://github.com/nvim-tree/nvim-web-devicons" },
+  { src = "https://github.com/nvim-telescope/telescope.nvim" },
+  { src = "https://github.com/nvim-telescope/telescope-fzf-native.nvim" },
   { src = "https://github.com/nvim-lua/plenary.nvim" },
   { src = "https://github.com/sindrets/diffview.nvim" },
   { src = "https://github.com/NeogitOrg/neogit" },
@@ -78,11 +79,21 @@ vim.api.nvim_create_autocmd("LspAttach", {
 })
 vim.cmd("set completeopt+=noselect")
 
-require "mini.pick".setup({})
-require("nvim-treesitter.configs").setup({
-  ensure_installed = { "lua", "cpp", "rust" },
-  highlight = { enable = true }
-})
+require('telescope').setup {
+    defaults = {
+        mappings = {
+            i = {
+                ['<C-u>'] = false,
+                ['<C-d>'] = false,
+            },
+        },
+    },
+}
+
+-- Enable telescope fzf native, if installed
+pcall(require('telescope').load_extension, 'fzf')
+
+require('nvim-treesitter').install { 'lua', 'cpp', 'rust' }
 vim.lsp.config('rust_analyzer', {
   settings = {
     ['rust-analyzer'] = {
@@ -127,12 +138,22 @@ vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end)
 vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end)
 vim.keymap.set('n', '<leader>lf', vim.lsp.buf.format)
 
-vim.keymap.set('n', '<leader><space>', function() require('mini.pick').builtin.buffers() end,
-  { desc = '[ ] Find existing buffers' })
-vim.keymap.set('n', '<leader>gf', function() require('mini.pick').builtin.files({ tool = 'git' }) end,
-  { desc = 'Search [G]it [F]iles' })
-vim.keymap.set('n', '<leader>sf', function() require('mini.pick').builtin.files() end, { desc = '[S]earch [F]iles' })
-vim.keymap.set('n', '<leader>sh', function() require('mini.pick').builtin.help() end, { desc = '[S]earch [H]elp' })
-vim.keymap.set('n', '<leader>sg', function() require('mini.pick').builtin.grep_live() end,
-  { desc = '[S]earch by [G]rep' })
+--- TELESCOPE ---
+vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
+vim.keymap.set('n', '<leader><space>', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers' })
+vim.keymap.set('n', '<leader>/', function()
+    -- You can pass additional configuration to telescope to change theme, layout, etc.
+    require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
+        winblend = 10,
+        previewer = false,
+    })
+end, { desc = '[/] Fuzzily search in current buffer' })
+
+vim.keymap.set('n', '<leader>gf', require('telescope.builtin').git_files, { desc = 'Search [G]it [F]iles' })
+vim.keymap.set('n', '<leader>sf', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
+vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
+vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
+vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
+vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
+--- TELESCOPE ---
 --------------------------------------------Keymaps-------------------------------------------------
