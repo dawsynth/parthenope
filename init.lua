@@ -93,7 +93,7 @@ require('telescope').setup {
 -- Enable telescope fzf native, if installed
 pcall(require('telescope').load_extension, 'fzf')
 
-require('nvim-treesitter').install { 'lua', 'cpp', 'rust' }
+require('nvim-treesitter').install { 'lua', 'cpp', 'python', 'rust' }
 vim.lsp.config('rust_analyzer', {
   settings = {
     ['rust-analyzer'] = {
@@ -103,7 +103,7 @@ vim.lsp.config('rust_analyzer', {
     }
   }
 })
-vim.lsp.enable({ "lua_ls", "clangd", "rust_analyzer" })
+vim.lsp.enable({ "lua_ls", "clangd", "ty", "rust_analyzer" })
 
 
 -- require("mini.pick").setup()
