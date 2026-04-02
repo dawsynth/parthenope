@@ -8,6 +8,7 @@ vim.pack.add({
   { src = "https://github.com/sindrets/diffview.nvim" },
   { src = "https://github.com/NeogitOrg/neogit" },
   { src = "https://github.com/folke/which-key.nvim" },
+  { src = "https://github.com/mhartington/formatter.nvim" },
   { src = "https://github.com/nvim-treesitter/nvim-treesitter" },
   { src = "https://github.com/neovim/nvim-lspconfig" },
 })
@@ -105,8 +106,8 @@ vim.lsp.config('rust_analyzer', {
 })
 vim.lsp.enable({ "lua_ls", "clangd", "ty", "rust_analyzer" })
 
+require('nvim-web-devicons').setup { default = true; }
 
--- require("mini.pick").setup()
 require("rose-pine").setup({
   variant = 'moon',
   disable_background = true,
