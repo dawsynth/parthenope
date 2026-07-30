@@ -106,6 +106,41 @@ vim.lsp.config('rust_analyzer', {
 })
 vim.lsp.enable({ "lua_ls", "clangd", "ty", "rust_analyzer" })
 
+local util = require("formatter.util")
+
+require("formatter").setup({
+  logging = true,
+  log_level = vim.log.levels.WARN,
+  filetype = {
+    -- Configuration for C++
+    cpp = {
+      function()
+        return {
+          exe = "clang-format-14",
+          args = {
+            "--assume-filename",
+            util.escape_path(util.get_current_buffer_file_name()),
+          },
+          stdin = true,
+        }
+      end
+    },
+    -- You can add C here as well
+    c = {
+      function()
+        return {
+          exe = "clang-format-14",
+          args = {
+            "--assume-filename",
+            util.escape_path(util.get_current_buffer_file_name()),
+          },
+          stdin = true,
+        }
+      end
+    },
+  },
+})
+
 require('nvim-web-devicons').setup { default = true; }
 
 require("rose-pine").setup({
